@@ -115,7 +115,8 @@ LOGIN_URL = '/login/'
 ########## SECRET CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 # Note: This key only used for development and testing.
-SECRET_KEY = '9x+a74cd9=c1i%+j)mn3+%om@^&_9j(grm^4)(aj-*s962rof_'
+#SECRET_KEY = '9x+a74cd9=c1i%+j)mn3+%om@^&_9j(grm^4)(aj-*s962rof_'
+SECRET_KEY = r"{{ secret_key }}"
 ########## END SECRET CONFIGURATION
 
 
@@ -207,7 +208,6 @@ DJANGO_APPS = (
 THIRD_PARTY_APPS = (
     # Database migration helpers:
     'south',
-    'tastypie',
 )
 
 # Apps specific for this project go here.
