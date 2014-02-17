@@ -228,7 +228,7 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 #provided in django-registration.
 ACCOUNT_ACTIVATION_DAYS = 7
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
-EMAIL_FILE_PATH = join(DJANGO_ROOT, '../fake-email-server') 
+EMAIL_FILE_PATH = join(SITE_ROOT, '../fake-email-server') 
 
 LOGIN_REDIRECT_URL = 'http://localhost:8000/tobedecided/'
 

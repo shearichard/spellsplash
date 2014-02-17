@@ -3,6 +3,7 @@ from django.contrib.auth.views import redirect_to_login
 class LoginRequiredMiddleware(object):
     def process_request(self, request):
         if not (request.user.is_authenticated()
+            or request.path.startswith('/admin/')
             or request.path.startswith('/accounts/login')
             or request.path.startswith('/accounts/reset')
             or request.path.startswith('/accounts/register')
