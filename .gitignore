@@ -8,6 +8,8 @@ data
 venv
 # autoenv (https://github.com/kennethreitz/autoenv) ====
 .env
+# pretend email server
+fake-email-server
 
 # Vim==================================================
 *.s[a-w][a-z]

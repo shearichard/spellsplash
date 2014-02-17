@@ -4,7 +4,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^spellsplash/', include('spellsplash.urls', namespace="spellsplash")),
+    url(r'^spellweb/', include('spellweb.urls', namespace="spellweb")),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^accounts/', include('registration.backends.default.urls')),
+    url(r'^accounts/', include('auth_urls')),
 )

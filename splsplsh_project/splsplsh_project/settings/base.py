@@ -109,7 +109,7 @@ STATICFILES_FINDERS = (
 
 ########## LOGIN URL
 # URL of the login page.
-LOGIN_URL = '/login/'
+#LOGIN_URL = '/login/'
 ########## END LOGIN URL
 
 ########## SECRET CONFIGURATION
@@ -174,6 +174,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'splsplsh_project.middleware.LoginRequiredMiddleware',
 )
 ########## END MIDDLEWARE CONFIGURATION
 
@@ -208,6 +209,7 @@ DJANGO_APPS = (
 THIRD_PARTY_APPS = (
     # Database migration helpers:
     'south',
+    'registration',
 )
 
 # Apps specific for this project go here.
@@ -218,6 +220,17 @@ LOCAL_APPS = (
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 ########## END APP CONFIGURATION
+
+#django-registration configuration:
+#This is the number of days users will have to activate their accounts after 
+#registering. If a user does not activate within that period, the account 
+#will remain permanently inactive and may be deleted by maintenance scripts 
+#provided in django-registration.
+ACCOUNT_ACTIVATION_DAYS = 7
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = join(DJANGO_ROOT, '../fake-email-server') 
+
+LOGIN_REDIRECT_URL = 'http://localhost:8000/tobedecided/'
 
 
 ########## LOGGING CONFIGURATION
