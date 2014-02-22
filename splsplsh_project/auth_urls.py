@@ -25,6 +25,22 @@ from django.views.generic.base import TemplateView
 from registration.backends.default.views import ActivationView
 from registration.backends.default.views import RegistrationView
 
+from django.contrib.auth import views as auth_views
+'''
+url(r'^password/reset/$',
+auth_views.password_reset,
+{'template_name': 'registration/password_reset_change.html'},
+name='auth_password_reset'),
+url(r'^password/reset/confirm/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$',
+auth_views.password_reset_confirm,
+name='auth_password_reset_confirm'),
+url(r'^password/reset/complete/$',
+auth_views.password_reset_complete,
+name='auth_password_reset_complete'),
+url(r'^password/reset/done/$',
+auth_views.password_reset_done,
+name='auth_password_reset_done'),
+'''
 
 urlpatterns = patterns('',
                        url(r'^activate/complete/$',
@@ -46,5 +62,18 @@ urlpatterns = patterns('',
                        url(r'^register/closed/$',
                            TemplateView.as_view(template_name='registration/registration_closed.html'),
                            name='registration_disallowed'),
+                       url(r'^password/reset/$',
+                           auth_views.password_reset,
+                           {'template_name': 'registration/password_reset_change.html'},
+                           name='auth_password_reset'),
+                       url(r'^password/reset/confirm/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$',
+                           auth_views.password_reset_confirm,
+                           name='auth_password_reset_confirm'),
+                       url(r'^password/reset/complete/$',
+                           auth_views.password_reset_complete,
+                           name='auth_password_reset_complete'),
+                       url(r'^password/reset/done/$',
+                           auth_views.password_reset_done,
+                           name='auth_password_reset_done'),
                        (r'', include('registration.auth_urls')),
                        )
