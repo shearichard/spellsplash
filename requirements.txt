@@ -3,5 +3,6 @@ South==0.8.4
 argparse==1.2.1
 distribute==0.6.24
 django-registration==1.0
+-e git://github.com/saltycrane/django-trace.git@445b845b12326d234422038ada96dd7dd7c33fdc#egg=django_trace-dev
 psycopg2==2.5.2
 wsgiref==0.1.2
