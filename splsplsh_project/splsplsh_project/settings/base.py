@@ -167,6 +167,7 @@ print "*" * 40
 ########## MIDDLEWARE CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#middleware-classes
 MIDDLEWARE_CLASSES = (
+    'django_pdb.middleware.PdbMiddleware',
     # Default Django middleware.
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -211,6 +212,7 @@ THIRD_PARTY_APPS = (
     'south',
     'registration',
     'django_trace',
+    'django_pdb',
 )
 
 # Apps specific for this project go here.
