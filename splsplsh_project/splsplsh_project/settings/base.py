@@ -210,7 +210,7 @@ THIRD_PARTY_APPS = (
     # Database migration helpers:
     'south',
     'registration',
-    'django-trace',
+    'django_trace',
 )
 
 # Apps specific for this project go here.
