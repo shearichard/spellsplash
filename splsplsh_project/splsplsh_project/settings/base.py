@@ -213,6 +213,7 @@ THIRD_PARTY_APPS = (
     'registration',
     'django_trace',
     'django_pdb',
+    'django_extensions',
 )
 
 # Apps specific for this project go here.
