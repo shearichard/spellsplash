@@ -24,7 +24,8 @@ IMPORTANT
 -------
 **To make use of the local setting you must start the server like this :**
 
-python  manage.py runserver  0.0.0.0:8000 --settings=spellweb.settings.local
+python manage.py runserver 0.0.0.0:8000 --settings=splsplsh_project.settings.local
+
 
 * * * * 
 Using `autoenv` to set a ENV VAR of SECRET_KEY when we cd into spellsplash. Longer term
