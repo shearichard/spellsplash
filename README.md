@@ -74,3 +74,29 @@ build succeeded, 2 warnings.
 Build finished. The HTML pages are in _build/html.
 
 ```
+* * * * 
+This is a a guide to the urls associated with authorisation at at #e7159ec
+
+```
+/accounts/activate/<activation_key>/                    registration.backends.default.views.ActivationView      registration_activate
+/accounts/activate/complete/                            django.views.generic.base.TemplateView                  registration_activation_complete
+
+/accounts/login/                                        django.contrib.auth.views.login                         auth_login
+/accounts/logout/                                       django.contrib.auth.views.logout                        auth_logout
+
+/accounts/password/change/                              django.contrib.auth.views.password_change               auth_password_change
+/accounts/password/change/done/                         django.contrib.auth.views.password_change_done          auth_password_change_done
+
+/accounts/password/reset/                               django.contrib.auth.views.password_reset                auth_password_reset
+/accounts/password/reset/complete/                      django.contrib.auth.views.password_reset_complete       auth_password_reset_complete
+/accounts/password/reset/confirm/<uidb36>-<token>/      django.contrib.auth.views.password_reset_confirm        auth_password_reset_confirm
+/accounts/password/reset/done/                          django.contrib.auth.views.password_reset_done           auth_password_reset_done
+
+/accounts/register/                                     registration.backends.default.views.RegistrationView    registration_register
+/accounts/register/closed/                              django.views.generic.base.TemplateView                  registration_disallowed
+/accounts/register/complete/                            django.views.generic.base.TemplateView                  registration_complete
+
+/admin/logout/                                          django.contrib.admin.sites.logout                       logout
+/admin/password_change/                                 django.contrib.admin.sites.password_change              password_change
+/admin/password_change/done/                            django.contrib.admin.sites.password_change_done         password_change_done
+```
