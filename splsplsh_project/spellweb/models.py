@@ -2,6 +2,7 @@ from datetime import datetime
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.timezone import localtime
 
 class Teacher(models.Model):
     user = models.OneToOneField(User, primary_key=True)
@@ -46,7 +47,7 @@ class Attempt(models.Model):
         ordering = ['-when']
 
     def __unicode__(self):
-        formatted_when = self.when.strftime('%d-%b-%Y %X')
+        formatted_when = localtime(self.when).strftime('%d-%b-%Y %X')
         if self.success:
             formatted_success = "YES"
         else:
