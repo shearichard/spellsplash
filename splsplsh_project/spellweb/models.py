@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -10,7 +12,7 @@ class Teacher(models.Model):
         ordering = ['family_name', 'chosen_name']
 
     def __unicode__(self):
-            return self.user
+        return u'%s, %s' % (self.family_name, self.chosen_name)
 
 class Learner(models.Model):
     teacher = models.ForeignKey(Teacher)
@@ -21,12 +23,18 @@ class Learner(models.Model):
     class Meta:
         ordering = ['family_name', 'chosen_name']
 
+    def __unicode__(self):
+        return u'%s, %s' % (self.family_name, self.chosen_name)
+
 class Word(models.Model):
     level = models.IntegerField()
     word = models.CharField(primary_key=True, unique=True, max_length=30)
 
     class Meta:
         ordering = ['level', 'word']
+
+    def __unicode__(self):
+        return self.word
 
 class Attempt(models.Model):
     learner = models.ForeignKey(Learner)
@@ -36,4 +44,13 @@ class Attempt(models.Model):
 
     class Meta:
         ordering = ['-when']
-    
+
+    def __unicode__(self):
+        formatted_when = self.when.strftime('%d-%b-%Y %X')
+        if self.success:
+            formatted_success = "YES"
+        else:
+            formatted_success = "NO"
+
+        return u'%s - %s- Success ?: %s ' % (self.word, formatted_when, formatted_success)
+
