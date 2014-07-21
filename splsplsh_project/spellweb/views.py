@@ -9,7 +9,9 @@ from spellweb.models import Word, Attempt
 
 class IndexView(generic.ListView):
     def get(self, request, *args, **kwargs):
-        return HttpResponse("Hello, World")
+        context = {'test_message': "This is content, Hello, World"}
+        return render(request, 'splsplsh_project/index.html', context)
+        #return HttpResponse("Hello, World")
 
 #class DetailView(generic.DetailView):
 #    pass
