@@ -2,14 +2,18 @@
 {% load i18n %}
 
 {% block content %}
-<form method="post" action=".">
-  {% csrf_token %} 
-  {{ form.as_p }}
+    <fieldset>
+        <legend>Login to SpellSplash</legend>
+        <form method="post" action=".">
+          {% csrf_token %} 
+          {{ form.as_p }}
 
-  <input type="submit" value="{% trans 'Log in' %}" />
-  <input type="hidden" name="next" value="{{ next }}" />
-</form>
+          <input type="submit" value="{% trans 'Log in' %}" />
+          <input type="hidden" name="next" value="{{ next }}" />
+        </form>
+    <p></p>
+    <p>{% trans "Forgotten your password" %}? <a href="{% url "auth_password_reset" %}">{% trans "Reset it" %}</a>!</p>
+    <p>{% trans "Not member" %}? <a href="{% url "registration_register" %}">{% trans "Register" %}</a>!</p>
+    </fieldset>
 
-<p>{% trans "Forgot password" %}? <a href="{% url "auth_password_reset" %}">{% trans "Reset it" %}</a>!</p>
-<p>{% trans "Not member" %}? <a href="{% url "registration_register" %}">{% trans "Register" %}</a>!</p>
 {% endblock %}
