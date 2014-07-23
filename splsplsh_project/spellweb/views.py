@@ -7,6 +7,7 @@ from django.shortcuts import redirect
 
 from spellweb.models import Word, Attempt, Learner
 
+from django.views.generic.edit import CreateView
 
 class IndexView(generic.ListView):
     def get(self, request, *args, **kwargs):
@@ -19,8 +20,8 @@ class IndexView(generic.ListView):
         except Learner.DoesNotExist:
             print "No"
             #return redirect('MyViewLearner', request)
-            #return redirect('learnercreate', request)
-            return redirect('lc/', request)
+            #return redirect('anamedurl', request)
+            return redirect('lc/', request )
         return render(request, 'splsplsh_project/index.html', context)
         #return HttpResponse("Hello, World")
 
@@ -30,12 +31,12 @@ class IndexView(generic.ListView):
 #class ResultsView(generic.DetailView):
 #    pass
 #
-from django.views.generic.edit import CreateView
-
 class LearnerCreate(CreateView):
     model = Learner
     fields = ['teacher', 'learning_level']
+    success_url='/spellweb/'
 
 class MyViewLearner(generic.View):
     def get(self, request, *args, **kwargs):
         return HttpResponse("Hello, Learner 9")
+
