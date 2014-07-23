@@ -16,6 +16,10 @@ class Teacher(models.Model):
         return u'%s, %s' % (self.family_name, self.chosen_name)
 
 class Learner(models.Model):
+    #The username property is a temporary thing until
+    #I've worked out how to extend django-registration
+    #to do this properly. Clearly the null=True is not good !
+    username = models.CharField(max_length=30, null=True)
     teacher = models.ForeignKey(Teacher)
     chosen_name = models.CharField(max_length=30)
     family_name = models.CharField(max_length=30)
