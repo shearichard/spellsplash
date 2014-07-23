@@ -14,16 +14,15 @@ class IndexView(generic.ListView):
         dic_context = {'test_message': "This is content, Hello, World"}
         dic_context['test_uname'] = request.user.get_username()
         context = dic_context
+        '''
+        If the user hasn't yet set up a Learner then direct them to do so 
+        now 
+        '''
         try:
             l = Learner.objects.get(username = request.user.get_username())
-            print "Yes"
         except Learner.DoesNotExist:
-            print "No"
-            #return redirect('MyViewLearner', request)
-            #return redirect('anamedurl', request)
             return redirect('lc/', request )
         return render(request, 'splsplsh_project/index.html', context)
-        #return HttpResponse("Hello, World")
 
 #class DetailView(generic.DetailView):
 #    pass
@@ -33,10 +32,11 @@ class IndexView(generic.ListView):
 #
 class LearnerCreate(CreateView):
     model = Learner
-    fields = ['teacher', 'learning_level']
     success_url='/spellweb/'
 
-class MyViewLearner(generic.View):
-    def get(self, request, *args, **kwargs):
-        return HttpResponse("Hello, Learner 9")
+    def get_initial(self):
+        dic = {'username': self.request.user.get_username()} 
+        self.initial = dic
+        return self.initial
+        
 
