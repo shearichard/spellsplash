@@ -22,7 +22,7 @@ class IndexView(generic.ListView):
             l = Learner.objects.get(username = request.user.get_username())
         except Learner.DoesNotExist:
             return redirect('lc/', request )
-        return render(request, 'splsplsh_project/index.html', context)
+        return render(request, 'spellweb/index.html', context)
 
 #class DetailView(generic.DetailView):
 #    pass
