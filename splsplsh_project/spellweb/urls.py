@@ -6,7 +6,7 @@ from spellweb import views
 urlpatterns = patterns('',
     url(r'^$', views.IndexView.as_view(), name='index'),
     url(r'lc/', views.LearnerCreate.as_view(), name='anamedurl'),
-    url(r'attempt/', views.AttemptCreateView.as_view(), name='rcv'),
+    url(r'attempt/', views.attempt_create, name='attcrea'),
 )
 #    url(r'^(?P<pk>\d+)/$', views.DetailView.as_view(), name='detail'),
 #    url(r'^(?P<pk>\d+)/results/$', views.ResultsView.as_view(), name='results'),
