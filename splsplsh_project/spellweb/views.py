@@ -5,9 +5,16 @@ from django.views import generic
 from django.utils import timezone
 from django.shortcuts import redirect
 
-from spellweb.models import Learner
+from spellweb.models import Learner, Attempt
 
 from django.views.generic.edit import CreateView
+
+from extra_views import ModelFormSetView
+
+class AttemptCreateView(ModelFormSetView):
+    model = Attempt
+    success_url='/spellweb/'
+    template_name = 'spellweb/attempt_add_a.html'
 
 class IndexView(generic.ListView):
     def get(self, request, *args, **kwargs):
