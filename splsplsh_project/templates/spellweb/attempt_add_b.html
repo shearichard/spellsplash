@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+{% comment %}
+<form action="" method="post">{% csrf_token %}
+    <fieldset>
+         <legend>Record your Attempts</legend>
+    {{ form.as_p }}
+    </fieldset>
+    <input type="submit" value="Create" />
+</form>
+{% endcomment %}
+
+
+<form method="post" action="">
+    <fieldset>
+         <legend>Record your Attempts</legend>
+        {{ formset.management_form }}
+        {% for form in formset %}
+            {% for field in form %}
+                {{ field.label_tag }}: {{ field }}
+            {% endfor %}
+        {% endfor %}
+    </fieldset>
+    <input type="submit" value="Create" />
+</form>
+
+
+
+
+{{ test_message }}
+{{ test_uname }}
+{% endblock %}
