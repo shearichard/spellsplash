@@ -5,5 +5,5 @@ from django.forms.models import inlineformset_factory
 from .models import Learner, Word, Attempt 
 
 class AttemptForm(Form):
-    word = CharField(widget=TextInput(attrs={'readonly':'readonly'}))
+    word = CharField()
     success = BooleanField()
