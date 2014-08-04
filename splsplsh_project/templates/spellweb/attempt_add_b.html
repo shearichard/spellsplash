@@ -15,13 +15,12 @@
 
 
 <form method="post" action="">
+{% csrf_token %}
     <fieldset>
          <legend>Record your Attempts</legend>
         {{ formset.management_form }}
         {% for form in formset %}
-            {% for field in form %}
-                {{ field.label_tag }}: {{ field }}
-            {% endfor %}
+            <p><span>{{ form.word.value }}</span><span>{{ form.success }}<span></p>
         {% endfor %}
     </fieldset>
     <input type="submit" value="Create" />

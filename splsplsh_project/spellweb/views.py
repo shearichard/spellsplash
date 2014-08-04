@@ -37,17 +37,6 @@ def attempt_create(request):
     AttemptFormSet = formset_factory(AttemptForm)
     formset = AttemptFormSet(initial=make_init())
 
-#    for form in formset:
-#        print(form["word"])
-#        print "*" * 40
-#
-#    import pprint
-#    pprint.pprint(dir(form))
-#    print "=" * 60
-#    print formset.management_form
-#    print "=" * 60
-
-    #return render_to_response('spellweb/attempt_add_b.html', {'fgement_formorm': formset}, context)
     return render_to_response('spellweb/attempt_add_b.html', {'formset': formset}, context)
 
 class IndexView(generic.ListView):
