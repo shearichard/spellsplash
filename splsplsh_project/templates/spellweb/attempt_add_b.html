@@ -3,16 +3,6 @@
 
 {% block content %}
 
-{% comment %}
-<form action="" method="post">{% csrf_token %}
-    <fieldset>
-         <legend>Record your Attempts</legend>
-    {{ form.as_p }}
-    </fieldset>
-    <input type="submit" value="Create" />
-</form>
-{% endcomment %}
-
 
 <form method="post" action="">
 {% csrf_token %}
@@ -20,25 +10,15 @@
          <legend>Record your Attempts</legend>
         {{ formset.management_form }}
         {% for form in formset %}
-
-{% comment %}
-            <p><span>{{ form.word.id }}</span>||<span>{{ form.word.id_for_label }}</span>||<span>{{ form.word.html_name }}</span>||<span>{{ form.word.value }}</span><span>{{ form.success }}<span></p>
-
-{% endcomment %}
             <p>Can you spell ?:
             <span>{{ form.word.value }}</span>
             <span>
                 <label for="{{ form.success.id_for_label }}">Success?:</label> 
                 <input id="{{ form.success.id_for_label }}" name="{{ form.success.html_name }}" type="checkbox" />
             </span>
+            </p>
         {% endfor %}
     </fieldset>
     <input type="submit" value="Create" />
 </form>
-
-
-
-
-{{ test_message }}
-{{ test_uname }}
 {% endblock %}

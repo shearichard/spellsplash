@@ -41,7 +41,7 @@ def make_init():
 def attempt_create(request):
     context = RequestContext(request)
 
-    AttemptFormSet = formset_factory(AttemptForm)
+    AttemptFormSet = formset_factory(AttemptForm, extra=0)
     formset = AttemptFormSet(initial=make_init())
 
     return render_to_response('spellweb/attempt_add_b.html', {'formset': formset}, context)
