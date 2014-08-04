@@ -20,7 +20,8 @@
          <legend>Record your Attempts</legend>
         {{ formset.management_form }}
         {% for form in formset %}
-            <p><span>{{ form.word.value }}</span><span>{{ form.success }}<span></p>
+
+            <p><span>{{ form.word.id_for_label }}</span>||<span>{{ form.word.html_name }}</span>||<span>{{ form.word.value }}</span><span>{{ form.success }}<span></p>
         {% endfor %}
     </fieldset>
     <input type="submit" value="Create" />
