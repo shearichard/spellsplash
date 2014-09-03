@@ -127,3 +127,4 @@ This is a a guide to the urls associated with authorisation at at #e7159ec
 /accounts/register/complete/                            django.views.generic.base.TemplateView                  registration_complete
 
 ```
+1
