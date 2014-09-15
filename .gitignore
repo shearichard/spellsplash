@@ -10,6 +10,8 @@ venv
 .env
 # pretend email server
 fake-email-server
+# Local settings
+splsplsh_project/splsplsh_project/settings/local.py
 
 # Vim==================================================
 *.s[a-w][a-z]

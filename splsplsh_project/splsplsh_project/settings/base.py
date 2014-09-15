@@ -234,7 +234,7 @@ ACCOUNT_ACTIVATION_DAYS = 7
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = join(SITE_ROOT, '../fake-email-server') 
 
-LOGIN_REDIRECT_URL = 'http://localhost:8000/spellweb/'
+LOGIN_REDIRECT_URL = 'spellweb/'
 
 
 ########## LOGGING CONFIGURATION

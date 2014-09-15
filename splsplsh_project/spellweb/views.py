@@ -49,7 +49,7 @@ def attempt_create(request):
 
 class IndexView(generic.ListView):
     def get(self, request, *args, **kwargs):
-        dic_context = {'test_message': "This is content, Hello, World"}
+        dic_context={}
         dic_context['test_uname'] = request.user.get_username()
         context = dic_context
         '''
@@ -61,7 +61,7 @@ class IndexView(generic.ListView):
         except Learner.DoesNotExist:
             return redirect('lc/', request )
 
-        return render(request, 'spellweb/base.html', context)
+        return render(request, 'spellweb/index.html', context)
 
 #class DetailView(generic.DetailView):
 #    pass
