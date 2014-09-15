@@ -31,21 +31,13 @@ def make_init():
     init_data.append({'word':'kzzzzzzzzzzzz'})
     return init_data
 
-#def attempt_create(request):
-#    context = RequestContext(request)
-#
-#    AttemptFormSet = formset_factory(AttemptForm)
-#    formset = AttemptFormSet(initial=make_init())
-#
-#    return render_to_response('spellweb/attempt_add_b.html', {'formset': formset}, context)
 def attempt_create(request):
     context = RequestContext(request)
 
     AttemptFormSet = formset_factory(AttemptForm, extra=0)
     formset = AttemptFormSet(initial=make_init())
 
-    return render_to_response('spellweb/attempt_add_b.html', {'formset': formset}, context)
-    #return render_to_response('spellweb/attempt_add_a.html', {'form': formset}, context)
+    return render_to_response('spellweb/attempt_add.html', {'formset': formset}, context)
 
 class IndexView(generic.ListView):
     def get(self, request, *args, **kwargs):

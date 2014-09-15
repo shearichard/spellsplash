@@ -1,44 +1,24 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Multiformset Demo</title>
-    <script src="{{ STATIC_URL }}js/jquery.min.js"></script>
-    <script src="{{ STATIC_URL }}js/jquery.formset.js"></script>
-    <script type="text/javascript">
-        $(function() {
-            $(".inline.{{ attempt_form.prefix }}").formset({
-                prefix: "{{ attempt_form.prefix }}",
-            })
-            $(".inline.{{ instruction_form.prefix }}").formset({
-                prefix: "{{ instruction_form.prefix }}",
-            })
-        })
-    </script>
-</head>
+{% extends "base.html" %}
+{% load i18n %}
 
-<body>
-    <div>
-        <h1>Add Attempt</h1>
-        <form action="." method="post">
-            {% csrf_token %}
-            <div>
-                {{ form.as_p }}
-            </div>
-            <fieldset>
-                <legend>Attempts</legend>
-                {{ attempt_form.management_form }}
-                {{ attempt_form.non_form_errors }}
-                {% for form in attempt_form %}
-                    {{ form.id }}
-                    <div class="inline {{ attempt_form.prefix }}">
-                        {{ form.description.errors }}
-                        {{ form.description.label_tag }}
-                        {{ form.description }}
-                    </div>
-                {% endfor %}
-            </fieldset>
-            <input type="submit" value="Add attempts" class="submit" />
-        </form>
-    </div>
-</body>
-</html>
+{% block content %}
+
+
+<form method="post" action="">
+{% csrf_token %}
+    <fieldset>
+         <legend>Record your Attempts</legend>
+        {{ formset.management_form }}
+        {% for form in formset %}
+            <p>Can you spell ?:
+            <span>{{ form.word.value }}</span>
+            <span>
+                <label for="{{ form.success.id_for_label }}">Success?:</label> 
+                <input id="{{ form.success.id_for_label }}" name="{{ form.success.html_name }}" type="checkbox" />
+            </span>
+            </p>
+        {% endfor %}
+    </fieldset>
+    <input type="submit" value="Submit Your Results" />
+</form>
+{% endblock %}
