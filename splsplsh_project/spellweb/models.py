@@ -32,14 +32,29 @@ class Learner(models.Model):
         return u'%s, %s' % (self.family_name, self.chosen_name)
 
 class Word(models.Model):
+    ESSENTIALWORDS = 'EW'
+    NZCER = 'ER'
+    OTHER = 'OT'
+    WORDSOURCE_TYPE_CHOICES = (
+        (ESSENTIALWORDS, 'Essential Words'),
+        (NZCER, 'NZCER'),
+        (OTHER, 'OTHER'),
+    )
+
     level = models.IntegerField()
     word = models.CharField(primary_key=True, unique=True, max_length=30)
+    source = models.CharField(max_length=2,
+                              choices=WORDSOURCE_TYPE_CHOICES,
+                              default=OTHER)
+    hint = models.CharField(max_length=30, null=True, blank=True)
 
     class Meta:
         ordering = ['level', 'word']
 
     def __unicode__(self):
         return self.word
+
+    
 
 class Attempt(models.Model):
     learner = models.ForeignKey(Learner)
