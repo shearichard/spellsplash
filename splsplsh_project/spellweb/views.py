@@ -74,9 +74,12 @@ def attempt_create(request):
     context = RequestContext(request)
 
     AttemptFormSet = formset_factory(AttemptForm, extra=0)
-    formset = AttemptFormSet(initial=make_random_attempt_set(lvl=0, src="OT", count=3))
+    formset = AttemptFormSet(initial=make_random_attempt_set(lvl=0, src="OT", count=10))
 
     return render_to_response('spellweb/attempt_add.html', {'formset': formset}, context)
+
+def attempt_submission(request):
+    return HttpResponse("You've submitted your attempt")
 
 class IndexView(generic.ListView):
     def get(self, request, *args, **kwargs):

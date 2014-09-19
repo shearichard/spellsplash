@@ -4,7 +4,7 @@
 {% block content %}
 
 
-<form method="post" action="">
+<form method="post" action="{% url 'spellweb:attemptsubmission' %}">
 {% csrf_token %}
     <fieldset>
          <legend>Record your Attempts</legend>
