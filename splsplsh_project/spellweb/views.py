@@ -40,7 +40,7 @@ def make_random_attempt_set(lvl, src, count=10):
         pk_list = []
         values_found = 0
         while values_found < count:
-            choice_id = random.randrange(0, count)
+            choice_id = random.randrange(0, (len(words_set_qs) - 1) )
             if choice_id in pk_list:
                 pass
             else:

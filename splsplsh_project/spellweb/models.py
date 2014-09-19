@@ -60,7 +60,7 @@ class Attempt(models.Model):
     learner = models.ForeignKey(Learner)
     word = models.ForeignKey(Word)
     when = models.DateTimeField(auto_now_add=True)
-    success = models.BooleanField()
+    success = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['-when']

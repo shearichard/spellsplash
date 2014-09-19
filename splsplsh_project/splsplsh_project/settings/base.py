@@ -159,15 +159,11 @@ TEMPLATE_DIRS = (
     normpath(join(SITE_ROOT, 'templates')),
 )
 ########## END TEMPLATE CONFIGURATION
-print "*" * 40
-print TEMPLATE_DIRS
-print "*" * 40
 
 
 ########## MIDDLEWARE CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#middleware-classes
 MIDDLEWARE_CLASSES = (
-    'django_pdb.middleware.PdbMiddleware',
     # Default Django middleware.
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -209,10 +205,8 @@ DJANGO_APPS = (
 
 THIRD_PARTY_APPS = (
     # Database migration helpers:
-    'south',
     'registration',
     'django_trace',
-    'django_pdb',
     'django_extensions',
 )
 
