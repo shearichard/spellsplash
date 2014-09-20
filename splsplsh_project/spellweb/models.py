@@ -42,7 +42,7 @@ class Word(models.Model):
     )
 
     level = models.IntegerField()
-    word = models.CharField(primary_key=True, unique=True, max_length=30)
+    word = models.CharField(max_length=30)
     source = models.CharField(max_length=2,
                               choices=WORDSOURCE_TYPE_CHOICES,
                               default=OTHER)
@@ -50,6 +50,7 @@ class Word(models.Model):
 
     class Meta:
         ordering = ['level', 'word']
+        unique_together = (("source", "word"),)
 
     def __unicode__(self):
         return self.word

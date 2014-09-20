@@ -35,7 +35,7 @@ def make_random_attempt_set(lvl, src, count=10):
 
     if len(words_set_qs) < count:
         for word in words_set_qs:
-            init_data.append({'word': word.word, 'hint': word.hint})
+            init_data.append({'word': word.word, 'hint': word.hint, 'wordid': word.pk})
     else:
         pk_list = []
         values_found = 0
@@ -46,7 +46,7 @@ def make_random_attempt_set(lvl, src, count=10):
             else:
                 pk_list.append(choice_id)
                 word = words_set_qs[choice_id]
-                init_data.append({'word': word.word, 'hint': word.hint})
+                init_data.append({'word': word.word, 'hint': word.hint, 'wordid': word.pk})
                 values_found += 1
     return init_data
 
@@ -78,7 +78,22 @@ def attempt_create(request):
 
     return render_to_response('spellweb/attempt_add.html', {'formset': formset}, context)
 
+
 def attempt_submission(request):
+    current_user = request.user
+    curr_learner_qs = Learner.objects.get(id=current_user.id)
+
+    AttemptFormSet = formset_factory(AttemptForm, extra=0)
+    formset = AttemptFormSet(request.POST)
+
+    lstAttempts = []
+    if(formset.is_valid()):
+        for form in formset:
+            d = form.cleaned_data
+            word_qs = Word.objects.get(id=d['wordid'])
+            lstAttempts.append(Attempt(learner=curr_learner_qs, word=word_qs, success=d['success']))
+        Attempt.objects.bulk_create(lstAttempts)
+    
     return HttpResponse("You've submitted your attempt")
 
 class IndexView(generic.ListView):
