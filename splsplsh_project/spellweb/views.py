@@ -1,4 +1,5 @@
 import random 
+import math
 
 from django.shortcuts import get_object_or_404, render
 from django.shortcuts import render_to_response
@@ -18,10 +19,147 @@ from extra_views import ModelFormSetView
 
 from forms import AttemptForm
 
+def generate_weightings(lvl, fresh_words, stale_words, recent_successes, recent_failures): 
+    '''
+    Populates a dictionary with one element for each word which is a candidate
+    for inclusion on the attempts page. The value of each element is a number
+    which will specify how likely that word is to appear on the next page
+
+    It's assumed that the Querysets fresh_words and stale_words together contain
+    all the words which the current user might be asked to spell
+
+    '''
+
+    #The spacing of the weighting constants is partially determined by
+    #how many levels might appear within a certain source. I'm going to 
+    #assume there will be no more than 15 levels
+    FRESHWORD = 30
+    STALEWORD = 15
+    HIDERECENTSUCCESS = 0.25
+    PROMOTERECENTFAILURE = 4.00
+
+    weighting = {}
+    for word in fresh_words:
+        weighting[word.id] = FRESHWORD * ((word.level * -1) + lvl + 1 ) 
+    for word in stale_words:
+        weighting[word.id] = STALEWORD * ((word.level * -1) + lvl + 1 ) 
+    for word in recent_successes:
+        weighting[word.id] = weighting[word.id] * HIDERECENTSUCCESS 
+    for word in recent_failures:
+        weighting[word.id] = weighting[word.id] * PROMOTERECENTFAILURE 
+
+    for k, v in weighting.iteritems():
+        weighting[k] = int(math.floor(weighting[k]))
+
+    print weighting
+    return weighting
+
+def make_weighted_attempt_set(lvl, src, curruserid, count=10, repeat_depth=4):
+    '''
+    Return a list of `count` dictionaries. 
+    
+    The content of each dictionary relates to a single word.
+
+    Each word is chosen from the subset of all words within 
+    the `src` set which are at or below the `Learner` level value.
+
+    Words are chosen from that set and may be viewed as two subsets.
+
+    The first subset contains words which have been attempted
+    recently but which the user seems to have trouple spelling.
+
+    The second subset contains words which have been attempted
+    recently and which the user seems to be able to spell.
+
+    The relative sizes of these two sets is dependent on the
+    results of the most recent set of attempts. Where a user
+    had difficultly with the last set the next set will tend
+    to skew towards those words they have previously succeeded
+    with. By contrast where the user is doing well a greater
+    number of more complex words will be included in the next 
+    set
+
+     * Simplicity (Simplest have lowest level)
+     * Results by this user of most recent attempt on the `Word`
+     * Whether there has been a failure in the most
+       recent `repeat_depth` attempts by this user
+
+    '''
+
+    success_ids = []
+    fail_ids = []
+
+    recent_attempts = Attempt.objects.filter(
+                        learner=curruserid
+                    ).filter(
+                        word__source=src
+                    ).order_by('-when')[:count]
+
+    for attempt in recent_attempts:
+        if attempt.success:
+            success_ids.append(attempt.id)
+        else:
+            fail_ids.append(attempt.id)
+
+    #Words they succeeded with last time
+    recent_successes = Word.objects.filter(attempt__in=success_ids).distinct()
+
+    #Words they failed with last time
+    recent_failures = Word.objects.filter(attempt__in=fail_ids).distinct()
+
+    #Words they have yet to attempt within the users level
+    fresh_words = Word.objects.filter(
+                        attempt__isnull=True
+                    ).filter(
+                        source=src
+                    ).filter(
+                        level__lte=lvl
+                    ).distinct()
+
+    #Words they have attempted at some point
+    stale_words = Word.objects.filter(
+                        attempt__isnull=False
+                    ).filter(
+                        source=src
+                    ).filter(
+                        level__lte=lvl
+                    ).distinct()
+
+    weighting = generate_weightings(lvl, fresh_words, stale_words, recent_successes, recent_failures) 
+
+    pk_list = []
+    values_found = 0
+    while values_found < count:
+        choice_id = random.choice([k for k in weighting for dummy in range(weighting[k])])
+        if choice_id in pk_list:
+            pass
+        else:
+            pk_list.append(choice_id)
+            values_found += 1
+
+    init_data = []
+    words_set_qs = Word.objects.all().filter(
+                    id__in=pk_list
+                )
+
+    for word in words_set_qs:
+        init_data.append({'word': word.word, 'hint': word.hint, 'wordid': word.pk})
+
+
+
+    print("Success in last attempt: {cntsuccess:d}".format(cntsuccess=len(recent_successes)))
+    print("Failure in last attempt: {cntfailure:d}".format(cntfailure=len(recent_failures)))
+    print("Fresh words: {freshwords:d}".format(freshwords=len(fresh_words)))
+    print("Stale words: {stalewords:d}".format(stalewords=len(stale_words)))
+    print pk_list
+
+    #return make_random_attempt_set(lvl, src, count)
+    return init_data
+
 def make_random_attempt_set(lvl, src, count=10):
     '''
     Return a list of dictionaries. The content
-    of each dictionary is a single word randomly
+    of each dictionary relates to  a single word randomly
     selected from the set of Word objects filtered
     by the level passed as an argument
     '''
@@ -74,7 +212,8 @@ def attempt_create(request):
     context = RequestContext(request)
 
     AttemptFormSet = formset_factory(AttemptForm, extra=0)
-    formset = AttemptFormSet(initial=make_random_attempt_set(lvl=0, src="OT", count=10))
+    #formset = AttemptFormSet(initial=make_random_attempt_set(lvl=0, src="OT", count=10))
+    formset = AttemptFormSet(initial=make_weighted_attempt_set(lvl=0, src="OT", curruserid=request.user.id, count=10))
 
     return render_to_response('spellweb/attempt_add.html', {'formset': formset}, context)
 
@@ -94,7 +233,7 @@ def attempt_submission(request):
             lstAttempts.append(Attempt(learner=curr_learner_qs, word=word_qs, success=d['success']))
         Attempt.objects.bulk_create(lstAttempts)
     
-    return HttpResponse("You've submitted your attempt")
+    return HttpResponse("You've submitted your attempt. What hasn't been done is any attempt to adjust your level based upon your results so far.")
 
 class IndexView(generic.ListView):
     def get(self, request, *args, **kwargs):
