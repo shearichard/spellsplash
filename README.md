@@ -1,6 +1,6 @@
 spellsplash       
 =========
-A tool to generate spelling questions based upon the users previous answers.
+A tool to generate spelling tests based upon the users previous answers.
 
 
 
