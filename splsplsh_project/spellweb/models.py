@@ -24,6 +24,7 @@ class Learner(models.Model):
     chosen_name = models.CharField(max_length=30)
     family_name = models.CharField(max_length=30)
     learning_level = models.IntegerField(default=0)
+    starting_level = models.IntegerField(default=0)
 
     class Meta:
         ordering = ['family_name', 'chosen_name']
