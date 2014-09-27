@@ -19,6 +19,32 @@ from extra_views import ModelFormSetView
 
 from forms import AttemptForm
 
+TEMPORARY_SRC_HARDCODING = "OT"
+
+def success_proportion_on_level(curr_learner):
+    '''
+    Determines what proportion of `Word` at the current
+    `learner_level` for this `Learner` were answered
+    successfully at the the most recent `Attempt` by this
+    `Learner`.
+    '''
+    return 0.4
+
+def increase_learner_level(curr_learner):
+    '''
+    Returns a boolean indicating whether, based on results
+    so far, the `learning_level` for a `Learner`, passed
+    as argument `curr_learner`, should be raised
+    '''
+    LEVELUPTHOLD = 0.5 
+    succ_prop_on_lvl = success_proportion_on_level(curr_learner)
+
+    if succ_prop_on_lvl > LEVELUPTHOLD:
+        return True
+    else:
+        return False
+
+
 def generate_weightings(lvl, fresh_words, stale_words, recent_successes, recent_failures): 
     '''
     Populates a dictionary with one element for each word which is a candidate
@@ -54,7 +80,7 @@ def generate_weightings(lvl, fresh_words, stale_words, recent_successes, recent_
     print weighting
     return weighting
 
-def make_weighted_attempt_set(lvl, src, curruserid, count=10, repeat_depth=4):
+def make_weighted_attempt_set(src, curr_learner, count=10, repeat_depth=4):
     '''
     Return a list of `count` dictionaries. 
     
@@ -90,7 +116,7 @@ def make_weighted_attempt_set(lvl, src, curruserid, count=10, repeat_depth=4):
     fail_ids = []
 
     recent_attempts = Attempt.objects.filter(
-                        learner=curruserid
+                        learner=curr_learner.id
                     ).filter(
                         word__source=src
                     ).order_by('-when')[:count]
@@ -113,7 +139,9 @@ def make_weighted_attempt_set(lvl, src, curruserid, count=10, repeat_depth=4):
                     ).filter(
                         source=src
                     ).filter(
-                        level__lte=lvl
+                        level__lte=curr_learner.learning_level
+                    ).filter(
+                        level__gte=curr_learner.starting_level
                     ).distinct()
 
     #Words they have attempted at some point
@@ -122,10 +150,12 @@ def make_weighted_attempt_set(lvl, src, curruserid, count=10, repeat_depth=4):
                     ).filter(
                         source=src
                     ).filter(
-                        level__lte=lvl
+                        level__lte=curr_learner.learning_level
+                    ).filter(
+                        level__gte=curr_learner.starting_level
                     ).distinct()
 
-    weighting = generate_weightings(lvl, fresh_words, stale_words, recent_successes, recent_failures) 
+    weighting = generate_weightings(curr_learner.learning_level, fresh_words, stale_words, recent_successes, recent_failures) 
 
     pk_list = []
     values_found = 0
@@ -153,7 +183,6 @@ def make_weighted_attempt_set(lvl, src, curruserid, count=10, repeat_depth=4):
     print("Stale words: {stalewords:d}".format(stalewords=len(stale_words)))
     print pk_list
 
-    #return make_random_attempt_set(lvl, src, count)
     return init_data
 
 def make_random_attempt_set(lvl, src, count=10):
@@ -209,29 +238,41 @@ def make_hardcoded_attempt_set():
     return init_data
 
 def attempt_create(request):
+    curr_learner = Learner.objects.get(id=request.user.id)
+
     context = RequestContext(request)
 
     AttemptFormSet = formset_factory(AttemptForm, extra=0)
     #formset = AttemptFormSet(initial=make_random_attempt_set(lvl=0, src="OT", count=10))
-    formset = AttemptFormSet(initial=make_weighted_attempt_set(lvl=0, src="OT", curruserid=request.user.id, count=10))
+    src=TEMPORARY_SRC_HARDCODING
+    formset = AttemptFormSet(initial=make_weighted_attempt_set(src, curr_learner, count=10))
 
     return render_to_response('spellweb/attempt_add.html', {'formset': formset}, context)
 
 
 def attempt_submission(request):
-    current_user = request.user
-    curr_learner_qs = Learner.objects.get(id=current_user.id)
+    '''
+    Parse the form contents; Add corresponding `Attempt` objects;
+    If necessary adjust `learning_level` property on the users
+    `Learner` object
+    '''
 
     AttemptFormSet = formset_factory(AttemptForm, extra=0)
     formset = AttemptFormSet(request.POST)
 
     lstAttempts = []
     if(formset.is_valid()):
+        curr_learner = Learner.objects.get(id=request.user.id)
+        #Add Attempt objects
         for form in formset:
             d = form.cleaned_data
             word_qs = Word.objects.get(id=d['wordid'])
-            lstAttempts.append(Attempt(learner=curr_learner_qs, word=word_qs, success=d['success']))
+            lstAttempts.append(Attempt(learner=curr_learner, word=word_qs, success=d['success']))
         Attempt.objects.bulk_create(lstAttempts)
+        #Potentially adjust `learning_level` value for this `Learner`
+        if increase_learner_level(curr_learner):
+            new_level = curr_learner.learning_level + 1
+            curr_learner.update(learning_level=new_level)
     
     return HttpResponse("You've submitted your attempt. What hasn't been done is any attempt to adjust your level based upon your results so far.")
 
