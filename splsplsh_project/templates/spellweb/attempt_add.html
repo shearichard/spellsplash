@@ -9,19 +9,26 @@
     <fieldset>
          <legend>Record your Attempts</legend>
         {{ formset.management_form }}
+        <table>
         {% for form in formset %}
-            <p>Can you spell ?:
-            <span>{{ form.word.value }}</span>
-            <span>({{ form.hint.value }})</span>
-            <span>
+        <tr>
+            <td>{{ form.word.value }}</td>
+            {% if form.hint.strip %}
+                <td>({{ form.hint.value }})</td>
+            {% else %}
+                <td>&nbsp;</td>
+            {% endif %}
+            <td>
                 <label for="{{ form.success.id_for_label }}">Success?:</label> 
                 <input id="{{ form.success.id_for_label }}" name="{{ form.success.html_name }}" type="checkbox" />
-            </span>
             <span>
             <input id="{{ form.wordid.id_for_wordid }}" name="{{ form.wordid.html_name }}" type="hidden" value="{{ form.wordid.value }}" />
+            </td>
             </span>
             </p>
+        </tr>
         {% endfor %}
+        </table>
     </fieldset>
     <input type="submit" value="Submit Your Results" />
 </form>
