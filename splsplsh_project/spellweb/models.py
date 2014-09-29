@@ -4,6 +4,16 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.timezone import localtime
 
+ESSENTIALWORDS = 'EW'
+NZCER = 'ER'
+OTHER = 'OT'
+WORDSOURCE_TYPE_CHOICES = (
+    (ESSENTIALWORDS, 'Essential Words'),
+    (NZCER, 'NZCER'),
+    (OTHER, 'OTHER'),
+)
+
+
 class Teacher(models.Model):
     user = models.OneToOneField(User, primary_key=True)
     chosen_name = models.CharField(max_length=30)
@@ -25,6 +35,9 @@ class Learner(models.Model):
     family_name = models.CharField(max_length=30)
     learning_level = models.IntegerField(default=0)
     starting_level = models.IntegerField(default=0)
+    source = models.CharField(max_length=2,
+                              choices=WORDSOURCE_TYPE_CHOICES,
+                              default=ESSENTIALWORDS)
 
     class Meta:
         ordering = ['family_name', 'chosen_name']
@@ -33,20 +46,11 @@ class Learner(models.Model):
         return u'%s, %s' % (self.family_name, self.chosen_name)
 
 class Word(models.Model):
-    ESSENTIALWORDS = 'EW'
-    NZCER = 'ER'
-    OTHER = 'OT'
-    WORDSOURCE_TYPE_CHOICES = (
-        (ESSENTIALWORDS, 'Essential Words'),
-        (NZCER, 'NZCER'),
-        (OTHER, 'OTHER'),
-    )
-
     level = models.IntegerField()
     word = models.CharField(max_length=30)
     source = models.CharField(max_length=2,
                               choices=WORDSOURCE_TYPE_CHOICES,
-                              default=OTHER)
+                              default=ESSENTIALWORDS)
     hint = models.CharField(max_length=30, null=True, blank=True)
 
     class Meta:

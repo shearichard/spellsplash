@@ -20,7 +20,7 @@ from extra_views import ModelFormSetView
 
 from forms import AttemptForm
 
-TEMPORARY_SRC_HARDCODING = "OT"
+TEMPORARY_SRC_HARDCODING = "EW"
 
 def success_proportion_on_level(curr_learner):
     '''
@@ -103,9 +103,9 @@ def generate_weightings(lvl, fresh_words, stale_words, recent_successes, recent_
     print weighting
     return weighting
 
-def make_weighted_attempt_set(src, curr_learner, count=10, repeat_depth=4):
+def make_weighted_attempt_set(src, curr_learner, max_cnt=10, repeat_depth=4):
     '''
-    Return a list of `count` dictionaries. 
+    Return a list of dictionaries. 
     
     The content of each dictionary relates to a single word.
 
@@ -135,14 +135,27 @@ def make_weighted_attempt_set(src, curr_learner, count=10, repeat_depth=4):
 
     '''
 
-    success_ids = []
-    fail_ids = []
+    count = Word.objects.filter(
+                        source=TEMPORARY_SRC_HARDCODING
+                    ).filter(
+                        level=curr_learner.learning_level
+                    ).count()
+
+    if max_cnt < count:
+        count = max_cnt
+    else:
+        if count > 5:
+            count = int(math.floor(count * 0.5))
+
 
     recent_attempts = Attempt.objects.filter(
                         learner=curr_learner.id
                     ).filter(
                         word__source=src
                     ).order_by('-when')[:count]
+
+    success_ids = []
+    fail_ids = []
 
     for attempt in recent_attempts:
         if attempt.success:
@@ -266,9 +279,8 @@ def attempt_create(request):
     context = RequestContext(request)
 
     AttemptFormSet = formset_factory(AttemptForm, extra=0)
-    #formset = AttemptFormSet(initial=make_random_attempt_set(lvl=0, src="OT", count=10))
     src=TEMPORARY_SRC_HARDCODING
-    formset = AttemptFormSet(initial=make_weighted_attempt_set(src, curr_learner, count=10))
+    formset = AttemptFormSet(initial=make_weighted_attempt_set(src, curr_learner, max_cnt=10))
 
     return render_to_response('spellweb/attempt_add.html', {'formset': formset}, context)
 
