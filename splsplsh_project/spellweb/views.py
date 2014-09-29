@@ -14,6 +14,7 @@ from django.template import RequestContext
 from spellweb.models import Word, Learner, Attempt
 
 from django.views.generic.edit import CreateView
+from django.db.models import Max, F
 
 from extra_views import ModelFormSetView
 
@@ -28,7 +29,29 @@ def success_proportion_on_level(curr_learner):
     successfully at the the most recent `Attempt` by this
     `Learner`.
     '''
-    return 0.4
+
+    #How many words are in this level
+    cnt_words_in_lvl = Word.objects.filter(
+                        source=TEMPORARY_SRC_HARDCODING
+                    ).filter(
+                        level=curr_learner.learning_level
+                    ).count()
+
+    #How many words in this level were successfully spelt
+    #the last time an attempt was made to do so
+    cnt_words_in_lvl_last_got_right = Word.objects.filter(
+                        source=TEMPORARY_SRC_HARDCODING
+                    ).filter(
+                        level=curr_learner.learning_level
+                    ).annotate(
+                        latest=Max('attempt__when')
+                    ).filter(
+                        attempt__success=True, attempt__when=F('latest')
+                    ).count()
+
+    proportion_last_right_in_lvl = float(cnt_words_in_lvl_last_got_right) / float(cnt_words_in_lvl) 
+
+    return proportion_last_right_in_lvl
 
 def increase_learner_level(curr_learner):
     '''
@@ -271,8 +294,9 @@ def attempt_submission(request):
         Attempt.objects.bulk_create(lstAttempts)
         #Potentially adjust `learning_level` value for this `Learner`
         if increase_learner_level(curr_learner):
-            new_level = curr_learner.learning_level + 1
-            curr_learner.update(learning_level=new_level)
+            print "About to up learner_level"
+            curr_learner.learning_level=curr_learner.learning_level + 1
+            curr_learner.save()
     
     return HttpResponse("You've submitted your attempt. What hasn't been done is any attempt to adjust your level based upon your results so far.")
 
@@ -291,13 +315,6 @@ class IndexView(generic.ListView):
             return redirect('lc/', request )
 
         return render(request, 'spellweb/index.html', context)
-
-#class DetailView(generic.DetailView):
-#    pass
-#
-#class ResultsView(generic.DetailView):
-#    pass
-#
 
 class LearnerCreate(CreateView):
     model = Learner
