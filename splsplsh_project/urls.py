@@ -1,5 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.contrib.auth import views as auth_views
+from django.views.generic import RedirectView
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()
@@ -7,6 +8,7 @@ admin.autodiscover()
 #url(r'^accounts/', include('auth_urls')),
 
 urlpatterns = patterns('',
+    url(r'^$', RedirectView.as_view(url='/spellweb/')),
     url(r'^spellweb/', include('spellweb.urls', namespace="spellweb")),
     url(r'^admin/', include(admin.site.urls)),
       #override the default urls
