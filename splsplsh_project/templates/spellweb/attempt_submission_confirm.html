@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<h2>Good Try !</h2>
+<p>
+    You've submitted your attempt.
+</p>
+<p>
+    <a href="{% url 'spellweb:index' %}">{% trans "View your results so far" %}</a>  
+</p>
+{% endblock %}

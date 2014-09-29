@@ -310,7 +310,12 @@ def attempt_submission(request):
             curr_learner.learning_level=curr_learner.learning_level + 1
             curr_learner.save()
     
-    return HttpResponse("You've submitted your attempt. What hasn't been done is any attempt to adjust your level based upon your results so far.")
+        dic_context={}
+        dic_context['test_uname'] = request.user.get_username()
+        context = dic_context
+        return render(request, 'spellweb/attempt_submission_confirm.html', context)
+    else:
+        return HttpResponse("An unexpected error occurred. Please report this situation.")
 
 class IndexView(generic.ListView):
     def get(self, request, *args, **kwargs):
