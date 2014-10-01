@@ -135,8 +135,6 @@ def make_weighted_attempt_set(src, curr_learner, max_cnt=10, repeat_depth=4):
 
     '''
 
-    import pdb; pdb.set_trace()
-
     count = Word.objects.filter(
                         source=TEMPORARY_SRC_HARDCODING
                     ).filter(

@@ -10,12 +10,12 @@
     <!--[if lt IE 8]>
       <link rel="stylesheet" href="{{ STATIC_URL }}css/blueprint/ie.css" type="text/css" media="screen, projection">
     <![endif]-->
+    <link href="{{ STATIC_URL }}css/spellsplash.css" rel="stylesheet" type="text/css" media="screen" />
     <title>{% block title %}User test{% endblock %}</title>
 
 </head>
 
 <body>
-    I am in the root of templates 1
     <div class="container">
         <div id="header">
             {% block header %}
@@ -31,7 +31,6 @@
             <hr />
             {% endblock %}
         </div>
-        <hr />
         <div id="content span-20">
             {% block content %}{% endblock %}
         </div>

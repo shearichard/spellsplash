@@ -1,0 +1,17 @@
+body{
+ background-color:#bbaa22;
+ color:#335511;
+ font-size:1.2em;
+ line-height:1.4em;
+ }   
+hr
+{
+    background-color: #335511;
+    height: 0.1em;
+    border-width: 0em;
+    border-style: solid;
+}
+a:link              { color:#6F187B; text-decoration:underline; }
+a:visited           { color:#6F187B; text-decoration:underline; }
+a:hover             { color:#410149; text-decoration:underline; }
+a:active            { color:#410149; text-decoration:underline; }
