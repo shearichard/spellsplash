@@ -135,6 +135,8 @@ def make_weighted_attempt_set(src, curr_learner, max_cnt=10, repeat_depth=4):
 
     '''
 
+    import pdb; pdb.set_trace()
+
     count = Word.objects.filter(
                         source=TEMPORARY_SRC_HARDCODING
                     ).filter(
@@ -321,7 +323,11 @@ class IndexView(generic.ListView):
     def get(self, request, *args, **kwargs):
         dic_context={}
         dic_context['test_uname'] = request.user.get_username()
+
+        curr_learner = Learner.objects.get(id=request.user.id)
         context = dic_context
+        context['lrng_lvl'] = curr_learner.learning_level
+        context['word_set'] = curr_learner.source
         '''
         If the user hasn't yet set up a Learner then direct them to do so 
         now 
