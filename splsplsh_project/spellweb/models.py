@@ -48,7 +48,15 @@ class Learner(models.Model):
         return u'%s, %s' % (self.family_name, self.chosen_name)
 
 class WordManager(models.Manager):
-    def after_adding_boxes(self, src, curr_learner):
+    def after_adding_boxes(self, curr_learner):
+        '''
+        Returns all `Word` objects for curr_learner
+        at the relevant `learning_level`.
+
+        Before it does that it first checks whether all
+        corresponding `Box` obects exist and if they do
+        not then it cretes them
+        '''
         #All boxes for this Learner
         lst_extant_box_id_for_lrnr = Box.objects.filter(
                     learner=curr_learner
@@ -83,12 +91,6 @@ class WordManager(models.Manager):
 
         return wordQS
 
-
-
-
-
-
-    
 
 class Word(models.Model):
     objects = WordManager()
