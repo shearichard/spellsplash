@@ -47,7 +47,52 @@ class Learner(models.Model):
     def __unicode__(self):
         return u'%s, %s' % (self.family_name, self.chosen_name)
 
+class WordManager(models.Manager):
+    def after_adding_boxes(self, src, curr_learner):
+        #All boxes for this Learner
+        lst_extant_box_id_for_lrnr = Box.objects.filter(
+                    learner=curr_learner
+                ).values_list('word_id', flat=True)
+        print lst_extant_box_id_for_lrnr
+
+
+        #Every `Word` up to current level that, for this `Learner`,
+        #that doesn't have a `Box`
+        words_that_need_boxes = Word.objects.filter(
+                    source=curr_learner.source
+                ).filter(
+                    level__lte=curr_learner.learning_level
+                ).exclude(
+                    id__in=lst_extant_box_id_for_lrnr
+                )
+        #Add a `Box` for each `Word` that doesn't have one
+        lst_boxes = []
+        for wrd in words_that_need_boxes:
+            lst_boxes.append(Box(learner=curr_learner, word=wrd, box_number=MIN_BOX_LEVEL))
+
+        print("About to insert {0} 'Boxes' for 'Learner' : {1}".format(len(lst_boxes), curr_learner))
+
+        Box.objects.bulk_create(lst_boxes)
+
+        #Now return the 'normal' `Word` QS
+        wordQS = Word.objects.filter(
+                    source=curr_learner.source
+                ).filter(
+                    level__lte=curr_learner.learning_level
+                )
+
+        return wordQS
+
+
+
+
+
+
+    
+
 class Word(models.Model):
+    objects = WordManager()
+
     level = models.IntegerField()
     word = models.CharField(max_length=30)
     source = models.CharField(max_length=2,
@@ -81,6 +126,7 @@ class Attempt(models.Model):
             formatted_success = "NO"
 
         return u'%s - %s- Success ?: %s ' % (self.word, formatted_when, formatted_success)
+
 
 class Box(models.Model):
     '''
