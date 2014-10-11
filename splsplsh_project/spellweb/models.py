@@ -13,6 +13,8 @@ WORDSOURCE_TYPE_CHOICES = (
     (OTHER, 'OTHER'),
 )
 
+MIN_BOX_LEVEL=0
+MAX_BOX_LEVEL=4
 
 class Teacher(models.Model):
     user = models.OneToOneField(User, primary_key=True)
@@ -80,3 +82,21 @@ class Attempt(models.Model):
 
         return u'%s - %s- Success ?: %s ' % (self.word, formatted_when, formatted_success)
 
+class Box(models.Model):
+    '''
+    `Box` represents a "Box" in the sense of the Leitner system of improving
+    the use of flashcards.
+
+    A predetermined number of boxes are used. If the `Learner` is able to
+    correctly spell a `Word` the `Word` moves up to a higher level `Box`; 
+    if they fail to spell a `Word` the `Word` moves down a level.
+
+    When we are selecting a group of `Word` objects using the Leitner system
+    words that appear in a lower level `Box` are more likely to be selected
+    '''
+    class Meta:
+        verbose_name_plural = "Boxes"
+
+    learner = models.ForeignKey(Learner)
+    word = models.ForeignKey(Word)
+    box_number = models.IntegerField()
