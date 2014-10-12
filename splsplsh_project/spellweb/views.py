@@ -11,7 +11,7 @@ from django.shortcuts import redirect
 from django.forms.formsets import formset_factory
 from django.template import RequestContext
 
-from spellweb.models import Word, Learner, Attempt
+from spellweb.models import Word, Learner, Attempt, Box
 
 from django.views.generic.edit import CreateView
 from django.db.models import Max, F
@@ -100,6 +100,26 @@ def generate_weightings(lvl, fresh_words, stale_words, recent_successes, recent_
 
     print weighting
     return weighting
+
+def make_leitner_attempt_set(src, curr_learner, max_cnt=10, repeat_depth=4):
+    '''
+    Return a list of dictionaries. 
+    
+    The content of each dictionary relates to a single word.
+
+    Each word is chosen from the subset of all words within 
+    the `src` set which are at or below the `Learner` level value.
+
+    Words are chosen from that subset based upon the "Leitner System"
+    (http://en.wikipedia.org/wiki/Leitner_system).
+
+    A quote from the Leitner Wikipedia page : "In the Leitner system, 
+    correctly answered cards are advanced to the next, less frequent box, 
+    while incorrectly answered cards return to the first box."
+
+    '''
+    pass
+
 
 def make_weighted_attempt_set(src, curr_learner, max_cnt=10, repeat_depth=4):
     '''
@@ -295,12 +315,16 @@ def attempt_submission(request):
     lstAttempts = []
     if(formset.is_valid()):
         curr_learner = Learner.objects.get(id=request.user.id)
-        #Add Attempt objects
+        #Add Attempt objects and update Box objects
         for form in formset:
             d = form.cleaned_data
-            word_qs = Word.objects.get(id=d['wordid'])
-            lstAttempts.append(Attempt(learner=curr_learner, word=word_qs, success=d['success']))
+            the_word = Word.objects.get(id=d['wordid'])
+            #Create `Attempt` object and store
+            lstAttempts.append(Attempt(learner=curr_learner, word=the_word, success=d['success']))
+            #Update `Box` object
+            Box.objects.get(learner=curr_learner, word=the_word).update_box_number(d['success'])
         Attempt.objects.bulk_create(lstAttempts)
+
         #Potentially adjust `learning_level` value for this `Learner`
         if increase_learner_level(curr_learner):
             print "About to up learner_level"
