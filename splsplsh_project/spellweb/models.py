@@ -157,3 +157,20 @@ class Box(models.Model):
     word = models.ForeignKey(Word)
     box_number = models.IntegerField(validators=[MinValueValidator(MIN_BOX_LEVEL), 
                                                  MaxValueValidator(MAX_BOX_LEVEL)])
+
+    def update_box_number(self, result):
+        '''
+        Updates the `box_number` property - upwards if `result` is True, downwards
+        if `result` is False - unless `box_number is already at the end of the valid
+        range in which case it does nothing
+        '''
+        assert ((result==False) or (result==True))
+
+        if result:
+            if self.box_number < MAX_BOX_LEVEL:
+                self.box_number += 1
+                self.save()
+        else:
+            if self.box_number > MIN_BOX_LEVEL:
+                self.box_number -= 1
+                self.save()
