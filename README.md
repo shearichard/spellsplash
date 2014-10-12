@@ -2,9 +2,9 @@ spellsplash
 =========
 A tool to generate spelling tests based upon the users previous answers.
 
-
-
 More specifically an implementation of Spaced Repetition (http://en.wikipedia.org/wiki/Spaced_repetition) to the area of the learning of spelling of English words.
+
+In particular the "Leitner System" (http://en.wikipedia.org/wiki/Leitner_system) will play a part in word selection.
 
 spellspin
 -------
