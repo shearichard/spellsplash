@@ -3,6 +3,8 @@ from datetime import datetime
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.timezone import localtime
+from django.core.validators import MinValueValidator
+from django.core.validators import MaxValueValidator
 
 ESSENTIALWORDS = 'EW'
 NZCER = 'ER'
@@ -153,4 +155,5 @@ class Box(models.Model):
 
     learner = models.ForeignKey(Learner)
     word = models.ForeignKey(Word)
-    box_number = models.IntegerField()
+    box_number = models.IntegerField(validators=[MinValueValidator(MIN_BOX_LEVEL), 
+                                                 MaxValueValidator(MAX_BOX_LEVEL)])
