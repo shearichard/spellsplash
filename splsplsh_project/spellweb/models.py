@@ -112,6 +112,12 @@ class Word(models.Model):
     
 
 class Attempt(models.Model):
+    '''
+    `Attempt` represents an occassion when a `Learner`
+    has been asked to spell a `Word`.
+
+    The results and time of the `Attempt` are recorded
+    '''
     learner = models.ForeignKey(Learner)
     word = models.ForeignKey(Word)
     when = models.DateTimeField(auto_now_add=True)
