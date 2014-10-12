@@ -20,8 +20,6 @@ from extra_views import ModelFormSetView
 
 from forms import AttemptForm
 
-TEMPORARY_SRC_HARDCODING = "EW"
-
 def success_proportion_on_level(curr_learner):
     '''
     Determines what proportion of `Word` at the current
@@ -32,7 +30,7 @@ def success_proportion_on_level(curr_learner):
 
     #How many words are in this level
     cnt_words_in_lvl = Word.objects.filter(
-                        source=TEMPORARY_SRC_HARDCODING
+                        source=curr_learner.source
                     ).filter(
                         level=curr_learner.learning_level
                     ).count()
@@ -40,7 +38,7 @@ def success_proportion_on_level(curr_learner):
     #How many words in this level were successfully spelt
     #the last time an attempt was made to do so
     cnt_words_in_lvl_last_got_right = Word.objects.filter(
-                        source=TEMPORARY_SRC_HARDCODING
+                        source=curr_learner.source
                     ).filter(
                         level=curr_learner.learning_level
                     ).annotate(
@@ -136,7 +134,7 @@ def make_weighted_attempt_set(src, curr_learner, max_cnt=10, repeat_depth=4):
     '''
 
     count = Word.objects.filter(
-                        source=TEMPORARY_SRC_HARDCODING
+                        source=curr_learner.source
                     ).filter(
                         level=curr_learner.learning_level
                     ).count()
@@ -279,8 +277,7 @@ def attempt_create(request):
     context = RequestContext(request)
 
     AttemptFormSet = formset_factory(AttemptForm, extra=0)
-    src=TEMPORARY_SRC_HARDCODING
-    formset = AttemptFormSet(initial=make_weighted_attempt_set(src, curr_learner, max_cnt=10))
+    formset = AttemptFormSet(initial=make_weighted_attempt_set(curr_learner.source, curr_learner, max_cnt=10))
 
     return render_to_response('spellweb/attempt_add.html', {'formset': formset}, context)
 
