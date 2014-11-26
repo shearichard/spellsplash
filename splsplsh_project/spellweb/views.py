@@ -19,6 +19,7 @@ from django.db.models import Max, F
 from extra_views import ModelFormSetView
 
 from forms import AttemptForm
+from models import MIN_BOX_LEVEL
 
 def success_proportion_on_level(curr_learner):
     '''
@@ -322,7 +323,13 @@ def attempt_submission(request):
             #Create `Attempt` object and store
             lstAttempts.append(Attempt(learner=curr_learner, word=the_word, success=d['success']))
             #Update `Box` object
-            Box.objects.get(learner=curr_learner, word=the_word).update_box_number(d['success'])
+            try:
+                thebox = Box.objects.get(learner=curr_learner, word=the_word)
+                thebox.update_box_number(d['success'])
+            except Box.DoesNotExist:
+                thebox = Box.objects.create(learner=curr_learner, word=the_word, box_number=MIN_BOX_LEVEL)
+
+
         Attempt.objects.bulk_create(lstAttempts)
 
         #Potentially adjust `learning_level` value for this `Learner`

@@ -174,3 +174,6 @@ class Box(models.Model):
             if self.box_number > MIN_BOX_LEVEL:
                 self.box_number -= 1
                 self.save()
+
+    def __unicode__(self):
+        return unicode(self.learner) + unicode(' has word "')  + unicode(self.word) + unicode('" in box:') + unicode(self.box_number)
