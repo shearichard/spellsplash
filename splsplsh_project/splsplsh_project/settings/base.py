@@ -208,6 +208,7 @@ THIRD_PARTY_APPS = (
     'registration',
     'django_trace',
     'django_extensions',
+    'bootstrap3',
 )
 
 # Apps specific for this project go here.

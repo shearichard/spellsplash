@@ -2,10 +2,10 @@ Django==1.7
 South==1.0
 argparse==1.2.1
 astroid==1.2.1
+django-bootstrap3==5.0.2
 django-extensions==1.4.0
 django-extra-views==0.6.5
-django-pdb==0.4.0
-django-registration==1.0
+django-registration-redux==1.1b0
 -e git://github.com/saltycrane/django-trace.git@445b845b12326d234422038ada96dd7dd7c33fdc#egg=django_trace-master
 logilab-common==0.62.1
 psycopg2==2.5.4
