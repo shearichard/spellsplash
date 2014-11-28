@@ -1,6 +1,8 @@
 from django.conf.urls import patterns, url
 from django.contrib import admin
 admin.autodiscover()
+admin.site.site_header = 'SpellSplash Administration Area'
+admin.site.site_title = 'SpellSplash Admin'
 
 from spellweb import views
 urlpatterns = patterns('',
