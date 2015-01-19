@@ -10,6 +10,7 @@ django-pdb==0.4.1
 django-registration-redux==1.1
 -e git://github.com/saltycrane/django-trace.git@445b845b12326d234422038ada96dd7dd7c33fdc#egg=django_trace-master
 fancycompleter==0.4
+gunicorn==19.1.1
 logilab-common==0.62.1
 pdbpp==0.7.2
 psycopg2==2.5.4
