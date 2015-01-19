@@ -26,7 +26,7 @@ IMPORTANT
 
 python manage.py runserver 0.0.0.0:8000 --settings=splsplsh_project.settings.local
 
-
+The virtenv used for dev is `spsp`.
 * * * * 
 Using `autoenv` to set a ENV VAR of SECRET_KEY when we cd into spellsplash. Longer term
 need a better solution.
