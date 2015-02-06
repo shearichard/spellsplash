@@ -33,6 +33,25 @@ need a better solution.
 
 Use `printenv` to confirm the SECRET_KEY is set correctly.
 
+IMPORTANT
+-------
+I've tried various things to make gunicorn work here are three just as a note:
+
+```
+gunicorn wsgi --log-file=-
+
+gunicorn splsplsh_project.wsgi --log-file=-
+
+gunicorn splsplsh_project.splsplsh_project.wsgi --log-file=-
+```
+
+Here's one that does work but only if the current directory is ~/dev/spellsplash/splsplsh_project:
+```
+gunicorn splsplsh_project.wsgi:application -b 0.0.0.0:8000  --log-file -
+```
+
+
+
 * * * * 
 (venv)~/dev/spellsplash $ flake8 ./spellweb
 (venv)~/dev/spellsplash $ pep257 ./spellweb
