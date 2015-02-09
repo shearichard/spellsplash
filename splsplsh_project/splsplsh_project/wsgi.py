@@ -21,6 +21,11 @@ root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
 from django.core.wsgi import get_wsgi_application
 from whitenoise.django import DjangoWhiteNoise
+#TEST LOGGING STARTS
+import logging
+logger = logging.getLogger('testlogger')
+logger.info('This is a simple log message')
+#TEST LOGGING ENDS   
 
 application = get_wsgi_application()
 application = DjangoWhiteNoise(application)
