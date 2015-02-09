@@ -271,3 +271,12 @@ LOGGING = {
 WSGI_APPLICATION = 'wsgi.application'
 ########## END WSGI CONFIGURATION
 TEST_RUNNER = 'django.test.runner.DiscoverRunner'
+
+# The following four lines of config are derived from 
+# https://devcenter.heroku.com/articles/django-assets
+
+# Simplified static file serving.
+# https://warehouse.python.org/project/whitenoise/
+
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+

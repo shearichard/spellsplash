@@ -1,5 +1,7 @@
 *.py[cod]
 
+# Static assets   ======================================
+splsplsh_project/assets/*
 # Database   ===========================================
 ./db  
 db/  

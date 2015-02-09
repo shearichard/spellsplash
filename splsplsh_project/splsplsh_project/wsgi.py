@@ -10,12 +10,18 @@ https://docs.djangoproject.com/en/1.6/howto/deployment/wsgi/
 import os
 import sys
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "splsplsh_project.settings.local")
+if 'DYNO' in os.environ:
+    debug = False
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "splsplsh_project.settings.heroku")
+else:
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "splsplsh_project.settings.local")
+    debug = True
+
 root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-print root_dir
-print ""
-import pprint
-pprint.pprint(sys.path)
 
 from django.core.wsgi import get_wsgi_application
+from whitenoise.django import DjangoWhiteNoise
+
 application = get_wsgi_application()
+application = DjangoWhiteNoise(application)
+

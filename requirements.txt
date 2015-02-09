@@ -19,6 +19,7 @@ psycopg2==2.5.4
 pyrepl==0.8.4
 six==1.9.0
 static3==0.5.1
+whitenoise==1.0.6
 wmctrl==0.1
 wsgiref==0.1.2
 yolk==0.4.3
