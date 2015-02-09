@@ -23,8 +23,15 @@ A web-ui which allows interaction with `spellspin`
 IMPORTANT
 -------
 **To make use of the local setting you must start the server like this :**
-
+```
 python manage.py runserver 0.0.0.0:8000 --settings=splsplsh_project.settings.local
+```
+
+**To use Gunicorn locally you must be within the Project directory (ie the same directory that contains manage.py) and execute this command**
+
+```
+gunicorn splsplsh_project.wsgi:application -b 0.0.0.0:8000  --log-file - --access-logfile -
+```
 
 The virtenv used for dev is `spsp`.
 * * * * 

@@ -174,6 +174,33 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'splsplsh_project.middleware.LoginRequiredMiddleware',
 )
+#ma
+#def module_exists(module_name):
+#    try:
+#        __import__(module_name)
+#    except ImportError:
+#        return False
+#    else:
+#        return True
+#
+#if module_exists('splsplsh_project.splsplsh_project.middleware.LoginRequiredMiddleware'):
+#    print "Long version"
+#    MIDDLEWARE_CLASSES = MIDDLEWARE_CLASSES + ('splsplsh_project.splsplsh_project.middleware.LoginRequiredMiddleware',)
+#else:
+#    print "Short version"
+#    MIDDLEWARE_CLASSES = MIDDLEWARE_CLASSES + ('splsplsh_project.middleware.LoginRequiredMiddleware',)
+#import pprint
+#print "^" * 50
+#pprint.pprint(globals())
+#print "?" * 50
+#pprint.pprint(globals()['MIDDLEWARE_CLASSES'])
+#print "!" * 50
+#print module_exists('splsplsh_project.splsplsh_project.middleware.LoginRequiredMiddleware')
+#print module_exists('splsplsh_project.middleware.LoginRequiredMiddleware')
+#print "&" * 50
+#pprint.pprint(dir())
+#print "@" * 50
+
 ########## END MIDDLEWARE CONFIGURATION
 
 
