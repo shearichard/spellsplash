@@ -39,7 +39,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'splsplsh_project.msplsplsh_project.middleware.LoginRequiredMiddleware',
+    'splsplsh_project.splsplsh_project.middleware.LoginRequiredMiddleware',
 )
 LOGGING = {
     'version': 1,
