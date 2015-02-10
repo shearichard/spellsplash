@@ -28,7 +28,7 @@ STATIC_ROOT = 'staticfiles'
 STATIC_URL = '/static1/'
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static2'),
+    os.path.join(BASE_DIR, 'assets'),
 )
 MIDDLEWARE_CLASSES = (
     # Default Django middleware.
