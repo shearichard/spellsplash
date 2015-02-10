@@ -24,11 +24,14 @@ ALLOWED_HOSTS = ['*']
 
 # Static asset configuration
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+print "TEST" * 10
+print BASE_DIR
+print "TEST" * 10
 STATIC_ROOT = 'staticfiles'
-STATIC_URL = '/static1/'
+STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'assets'),
+    os.path.join(BASE_DIR, '../../assets'),
 )
 MIDDLEWARE_CLASSES = (
     # Default Django middleware.
