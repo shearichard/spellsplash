@@ -16,7 +16,7 @@ A library which :
 
 spellspit
 -------
-A web-ui which allows interaction with `spellspin`
+A web-ui which allows interaction with `spellspin`.
 
 
 * * * * 
