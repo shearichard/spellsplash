@@ -1,3 +1,4 @@
+import os
 from os.path import abspath, basename, dirname, join, normpath
 from sys import path
 
@@ -22,7 +23,6 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 ALLOWED_HOSTS = ['*']
 
 # Static asset configuration
-import os
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = 'staticfiles'
 STATIC_URL = '/static/'
@@ -41,6 +41,9 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'splsplsh_project.splsplsh_project.middleware.LoginRequiredMiddleware',
 )
+
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
