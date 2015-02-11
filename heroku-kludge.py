@@ -13,9 +13,28 @@ on Heroku and which creates 'assets' if it doesn't already exist.
 There are some other solutions in the link shown above none of which are very 
 attractive but this seems better, for me, to those.
 '''
-ASSETS_DIR = "./splsplsh_project/assets"
 import os
+from datetime import datetime
+def getiso():
+    d=datetime.now()
+    return d.strftime('%Y%m%dT%H%M%S')  
+
+def touch(path):
+    with open(path, 'a'):
+        os.utime(path, None)
+
+iso_now = getiso()
+STARTFILE = "./HK-START-%s" % iso_now
+CREATEFILEPRE = "./HK-CREATE-PRE-%s" % iso_now
+CREATEFILEPOST = "./HK-CREATE-POST-%s" % iso_now
+ENDFILE = "./HK-END-%s" % iso_now
+ASSETS_DIR = "./splsplsh_project/assets"
+
+touch(STARTFILE)
 if os.path.exists(ASSETS_DIR):
     pass
 else:
+    touch(CREATEFILEPRE)
     os.makedirs(ASSETS_DIR)
+    touch(CREATEFILEPOST)
+touch(ENDFILE)
