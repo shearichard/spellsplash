@@ -12,10 +12,10 @@ admin.autodiscover()
 # Provide static url without leading slash
 _static_url = settings.STATIC_URL
 if _static_url.startswith('/'):
-        _static_url = _static_url[1:]
+    _static_url = _static_url[1:]
 
+#url(r'^%s(?P<path>.*)$' % _static_url, serve, {'document_root': settings.STATIC_ROOT}),
 urlpatterns = patterns('',
-    url(r'^%s(?P<path>.*)$' % _static_url, serve, {'document_root': settings.STATIC_ROOT}),
     url(r'^$', RedirectView.as_view(url='/spellweb/')),
     url(r'^spellweb/', include('spellweb.urls', namespace="spellweb")),
     url(r'^admin/', include(admin.site.urls)),

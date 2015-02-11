@@ -7,6 +7,7 @@ For more information on this file, see
 https://docs.djangoproject.com/en/1.6/howto/deployment/wsgi/
 """
 
+from django.conf import settings
 import os
 import sys
 sys.stdout = sys.stderr

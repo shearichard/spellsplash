@@ -24,15 +24,18 @@ ALLOWED_HOSTS = ['*']
 
 # Static asset configuration
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-print "TEST" * 10
-print BASE_DIR
-print "TEST" * 10
-STATIC_ROOT = 'staticfiles'
+STATIC_ROOT = os.path.join(BASE_DIR, '../../assets')
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, '../../assets'),
 )
+print "HERO" * 10
+print BASE_DIR
+print STATIC_ROOT
+print STATIC_URL 
+print STATICFILES_DIRS
+print "HERO" * 10
 MIDDLEWARE_CLASSES = (
     # Default Django middleware.
     'django_pdb.middleware.PdbMiddleware',
