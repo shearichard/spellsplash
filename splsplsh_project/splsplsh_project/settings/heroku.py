@@ -28,7 +28,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, '../../assets')
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, '../../assets'),
 )
 print "HERO" * 10
 print BASE_DIR
