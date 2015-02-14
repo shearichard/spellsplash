@@ -23,29 +23,31 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 ALLOWED_HOSTS = ['*']
 
 # Static asset configuration
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-STATIC_ROOT = os.path.join(BASE_DIR, '../../assets')
-STATIC_URL = '/assets/'
-
-STATICFILES_DIRS = (
-)
-print "HERO" * 10
-print BASE_DIR
-print STATIC_ROOT
-print STATIC_URL 
-print STATICFILES_DIRS
-print "HERO" * 10
-MIDDLEWARE_CLASSES = (
-    # Default Django middleware.
-    'django_pdb.middleware.PdbMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'splsplsh_project.splsplsh_project.middleware.LoginRequiredMiddleware',
-)
+#BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+#STATIC_ROOT = 'assets')
+#STATIC_URL = '/static/'
+#
+#STATICFILES_DIRS = (
+#    normpath(join(SITE_ROOT, 'assets')),
+#)
+#print "HERO" * 10
+#print BASE_DIR
+#print 'SITE_ROOT : ' + SITE_ROOT
+#print 'STATIC_ROOT : ' + STATIC_ROOT
+#print 'STATIC_URL : ' + STATIC_URL 
+#print 'STATICFILES_DIRS : ' + STATICFILES_DIRS
+#print "HERO" * 10
+#MIDDLEWARE_CLASSES = (
+#    # Default Django middleware.
+#    'django_pdb.middleware.PdbMiddleware',
+#    'django.middleware.common.CommonMiddleware',
+#    'django.contrib.sessions.middleware.SessionMiddleware',
+#    'django.middleware.csrf.CsrfViewMiddleware',
+#    'django.contrib.auth.middleware.AuthenticationMiddleware',
+#    'django.contrib.messages.middleware.MessageMiddleware',
+#    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+#    'splsplsh_project.splsplsh_project.middleware.LoginRequiredMiddleware',
+#)
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
