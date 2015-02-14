@@ -101,9 +101,9 @@ STATICFILES_DIRS = (
 )
 
 print "HERO" * 10
-print STATIC_ROOT
-print STATIC_URL 
-print STATICFILES_DIRS
+print 'STATIC_ROOT : ' + STATIC_ROOT
+print 'STATIC_URL : ' + STATIC_URL 
+print 'STATICFILES_DIRS : ' + STATICFILES_DIRS
 print "HERO" * 10
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
 STATICFILES_FINDERS = (
