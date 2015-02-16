@@ -14,7 +14,7 @@ sys.stdout = sys.stderr
 
 if 'DYNO' in os.environ:
     debug = False
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "splsplsh_project.splsplsh_project.settings.heroku")
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "splsplsh_project.settings.heroku")
 else:
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "splsplsh_project.settings.local")
     debug = True
