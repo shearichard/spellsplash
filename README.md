@@ -41,7 +41,10 @@ You can set the environment variable DJANGO_SETTINGS_MODULE so you don't need sp
 heroku config:set DJANGO_SETTINGS_MODULE=project.settings.prod
 ```
 
-
+You can disable collectstatic as follows :
+```
+heroku config:set DISABLE_COLLECTSTATIC=1
+```
 
 The virtenv used for dev is `spsp`.
 * * * * 
