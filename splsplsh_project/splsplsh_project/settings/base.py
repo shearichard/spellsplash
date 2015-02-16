@@ -101,6 +101,8 @@ STATICFILES_DIRS = (
 )
 
 print "HERO" * 10
+print 'DJANGO_ROOT : ' + DJANGO_ROOT
+print 'SITE_ROOT : ' + SITE_ROOT
 print 'STATIC_ROOT : ' + STATIC_ROOT
 print 'STATIC_URL : ' + STATIC_URL 
 print 'STATICFILES_DIRS : ' 
