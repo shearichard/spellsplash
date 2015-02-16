@@ -24,7 +24,7 @@ ALLOWED_HOSTS = ['*']
 
 # Static asset configuration
 #BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-#STATIC_ROOT = 'assets')
+STATIC_ROOT = '/app/splsplsh_project/staticfiles')
 #STATIC_URL = '/static/'
 #
 #STATICFILES_DIRS = (
