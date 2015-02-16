@@ -45,6 +45,7 @@ You can disable 'collectstatic' as follows :
 ```
 heroku config:set DISABLE_COLLECTSTATIC=1
 ```
+.
 
 The virtenv used for dev is `spsp`.
 * * * * 
