@@ -33,6 +33,16 @@ python manage.py runserver 0.0.0.0:8000 --settings=splsplsh_project.settings.loc
 gunicorn splsplsh_project.wsgi:application -b 0.0.0.0:8000  --log-file - --access-logfile -
 ```
 
+A note about Heroku from http://stackoverflow.com/a/16948108/364088:
+
+You can set the environment variable DJANGO_SETTINGS_MODULE so you don't need specify --settings everywhere:
+
+```
+heroku config:set DJANGO_SETTINGS_MODULE=project.settings.prod
+```
+
+
+
 The virtenv used for dev is `spsp`.
 * * * * 
 Using `autoenv` to set a ENV VAR of SECRET_KEY when we cd into spellsplash. Longer term
