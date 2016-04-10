@@ -10,13 +10,17 @@ https://docs.djangoproject.com/en/1.6/howto/deployment/wsgi/
 from django.conf import settings
 import os
 import sys
+import socket
 sys.stdout = sys.stderr
 
 if 'DYNO' in os.environ:
     debug = False
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "splsplsh_project.settings.heroku")
+elif socket.gethostname() =='dotcg':
+    debug = False
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "splsplsh_project.settings.digocean")
 else:
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "splsplsh_project.settings.local")
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "splsplsh_project.splsplsh_project.settings.local")
     debug = True
 
 root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
