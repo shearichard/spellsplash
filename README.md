@@ -18,6 +18,9 @@ spellspit
 -------
 A web-ui which allows interaction with `spellspin`.
 
+May 2016
+-------
+Did an upgrade to Django 1.9 and took the opportunity to upgrade all other packages at the same time to their latest release level. There is a backup of the requirements as it was before the upgrade. 
 
 * * * * 
 IMPORTANT
