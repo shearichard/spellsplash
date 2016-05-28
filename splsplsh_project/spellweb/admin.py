@@ -16,7 +16,8 @@ class WordAdmin(admin.ModelAdmin):
     list_filter = ('source',)
 
 class AttemptAdmin(admin.ModelAdmin):
-    list_display = ('word', 'when', 'success')
+    list_filter = ['learner']
+    list_display = ('word', 'learner', 'when', 'success')
 
 class BoxAdmin(admin.ModelAdmin):
     list_display = ('box_number', 'learner', 'word')
