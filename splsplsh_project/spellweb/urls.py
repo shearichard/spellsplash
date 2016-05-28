@@ -10,6 +10,7 @@ urlpatterns = patterns('',
     url(r'lc/', views.LearnerCreate.as_view(), name='anamedurl'),
     url(r'attempt/', views.attempt_create, name='attcrea'),
     url(r'attemptsubmission/', views.attempt_submission, name='attemptsubmission'),
+    url(r'showresults/', views.display_results, name='displayresults'),
 )
 #    url(r'^(?P<pk>\d+)/$', views.DetailView.as_view(), name='detail'),
 #    url(r'^(?P<pk>\d+)/results/$', views.ResultsView.as_view(), name='results'),

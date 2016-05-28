@@ -375,3 +375,11 @@ class LearnerCreate(CreateView):
         return self.initial
         
 
+def display_results(request):
+    curr_learner = Learner.objects.get(id=request.user.id)
+
+    context = RequestContext(request)
+
+    return render_to_response('spellweb/display_results.html', context)
+
+

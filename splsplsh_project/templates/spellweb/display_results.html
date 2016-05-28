@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+
+{% csrf_token %}
+    <fieldset>
+         <legend>Your Results</legend>
+         <p>This functionality has not yet been implemented<p>
+    </fieldset>
+    <a href="{% url 'spellweb:index' %}"><button class="spspbutton" type="button">Cancel</button></a>
+{% endblock %}
